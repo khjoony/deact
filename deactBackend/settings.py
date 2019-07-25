@@ -94,14 +94,12 @@ WSGI_APPLICATION = 'deactBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'boolean',
-        'USER': 'boolean',
-        'PASSWORD': '1ace4tec',
-        'HOST': '',
-        'PORT': '',
+        'OPTIONS': {
+            'read_default_file': os.path.join(BASE_DIR, 'mysql.ini'),
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'", #Added set of Strict
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

@@ -21,7 +21,7 @@ class App extends Component {
         return (
             <div>
                 {this.state.posts.map(item=> (
-                    <div key={item.id}>
+                    <div key={item.id} align ='center'>
                         <h1>{item.title}</h1>
                         <span>{item.contents}</span>
                     </div>
