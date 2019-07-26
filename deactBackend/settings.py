@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'post',
+    'stock',
     'rest_framework',
     'corsheaders', #추가
 ]

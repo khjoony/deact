@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 mysql.ini
+my.py
 
 # testing
 /coverage
