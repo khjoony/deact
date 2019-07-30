@@ -1,13 +1,42 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
+conda activate mycondaenv
+mkdir deact-clone & cd deact-clone
+git init & git clone https://github.com/khjoony/deact.git
+cd ..
+create-react-app deact
+cd deact 
+django-admin startproject deactBackend .
+copy ..\deact-clone\deact\stock .
+copy ..\deact-clone\deact\post .
+copy ..\deact-clone\deact\templates .
+
+create a file of mysql.ini
+## mysql.ini
+[client]
+database = databaseName
+user = userName
+password = databasePassword
+default-character-set = utf8
+ 
+ python manage.py makemigrations
+ python manage.py migrate
+
 
 In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.<br>
+Runs the react-app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
+
+### `python manage.py runserver`
+Runs the python-app in the development mode.<br>
+Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
