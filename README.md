@@ -1,27 +1,27 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
-conda activate mycondaenv
-mkdir deact-clone & cd deact-clone
-git init & git clone https://github.com/khjoony/deact.git
-cd ..
-create-react-app deact
-cd deact 
-django-admin startproject deactBackend .
-copy ..\deact-clone\deact\stock .
-copy ..\deact-clone\deact\post .
-copy ..\deact-clone\deact\templates .
+conda activate mycondaenv<br>
+mkdir deact-clone & cd deact-clone<br>
+git init & git clone https://github.com/khjoony/deact.git<br>
+cd ..<br>
+create-react-app deact<br>
+cd deact <br>
+django-admin startproject deactBackend .<br>
+copy ..\deact-clone\deact\stock .<br>
+copy ..\deact-clone\deact\post .<br>
+copy ..\deact-clone\deact\templates .<br>
 
 create a file of mysql.ini
 ## mysql.ini
-[client]
-database = databaseName
-user = userName
-password = databasePassword
-default-character-set = utf8
+[client]<br>
+database = databaseName<br>
+user = userName<br>
+password = databasePassword<br>
+default-character-set = utf8<br>
  
- python manage.py makemigrations
- python manage.py migrate
+ python manage.py makemigrations<br>
+ python manage.py migrate<br>
 
 
 In the project directory, you can run:
