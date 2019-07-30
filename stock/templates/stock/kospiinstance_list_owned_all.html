@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>All Owned kospis</h1>
+
+    {% if kospiinstance_list %}
+    <ul>
+
+      {% for kospiinst in kospiinstance_list %} 
+      <li class="{% if kospiinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'kospi-detail' kospiinst.kospi.pk %}">{{kospiinst.book.title}}</a> ({{ kospiinst.due_back }}) {% if user.is_staff %}- {{ kospiinst.owner }}{% endif %} {% if perms.stock.can_mark_returned %}- <a href="{% url 'search_kospi_name' kospinst.id %}">Owner</a>  {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no kospis owned.</p>
+    {% endif %}       
+{% endblock %}

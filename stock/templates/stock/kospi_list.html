@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Kospi List</h1>
+
+    {% if kospi_list %}
+    <ul>
+
+      {% for kospi in kospi_list %}
+      <li>
+        <a href="{{ kospi.get_absolute_url }}">{{ kospi.name }}</a> ({{kospi.code}})
+      </li>
+      {% endfor %}
+
+    </ul>
+
+    {% else %}
+      <p>There are no kospis in the stock.</p>
+    {% endif %}       
+{% endblock %}

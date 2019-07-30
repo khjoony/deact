@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Kosdak: {{ kosdak }} </h1>
+<p>{{kosdak.date_of_birth}} - {% if kosdak.date_of_death %}{{kosdak.date_of_death}}{% endif %}</p>
+
+<div style="margin-left:20px;margin-top:20px">
+<h4>Kosdaks</h4>
+
+<dl>
+{% for kosdak in kosdak.kosdak_set.all %}
+  <dt><a href="{% url 'kosdak-detail' kosdak.pk %}">{{kosdak}}</a> ({{kosdak.kosdakinstance_set.all.count}})</dt>
+  <dd>{{kosdak.summary}}</dd>
+{% endfor %}
+</dl>
+
+</div>
+{% endblock %}

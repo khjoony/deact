@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Kosdak: {{ kospi }} </h1>
+<p>{{kospi.date_of_birth}} - {% if kospi.date_of_death %}{{kospi.date_of_death}}{% endif %}</p>
+
+<div style="margin-left:20px;margin-top:20px">
+<h4>Kosdaks</h4>
+
+<dl>
+{% for kospi in kospi.kospi_set.all %}
+  <dt><a href="{% url 'kospi-detail' kospi.pk %}">{{kospi}}</a> ({{kospi.kospiinstance_set.all.count}})</dt>
+  <dd>{{kospi.summary}}</dd>
+{% endfor %}
+</dl>
+
+</div>
+{% endblock %}

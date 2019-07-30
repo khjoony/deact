@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Owned kospis</h1>
+
+    {% if kospiinstance_list %}
+    <ul>
+
+      {% for kospiinst in kospiinstance_list %} 
+      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'book-detail' bookinst.book.pk %}">{{kospiinst.kospi.name}}</a> ({{ kospiinst.due_back }})        
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no kospis owned.</p>
+    {% endif %}       
+{% endblock %}

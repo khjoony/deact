@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Owned kosdaks</h1>
+
+    {% if kosdakinstance_list %}
+    <ul>
+
+      {% for kosdakinst in kosdakinstance_list %} 
+      <li class="{% if kosdakinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'kosdak-detail' kosdakinst.kosdak.pk %}">{{kosdakinst.kosdak.name}}</a> ({{ kosdakinst.due_back }})        
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no kosdaks owned.</p>
+    {% endif %}       
+{% endblock %}
