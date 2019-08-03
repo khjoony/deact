@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>Kospi List</h1>
+    <a href="{% url 'search_kospi_name'%}">Search Code</a>  
 
     {% if kospi_list %}
     <ul>

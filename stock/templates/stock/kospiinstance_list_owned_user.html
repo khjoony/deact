@@ -2,13 +2,14 @@
 
 {% block content %}
     <h1>Owned kospis</h1>
+    <a href="{% url 'search_kospi_name' %}">Search Code</a>  
 
     {% if kospiinstance_list %}
     <ul>
 
       {% for kospiinst in kospiinstance_list %} 
-      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'book-detail' bookinst.book.pk %}">{{kospiinst.kospi.name}}</a> ({{ kospiinst.due_back }})        
+      <li class="{% if kospiinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'kospi-detail' kospiinst.kospi.pk %}">{{kospiinst.kospi.name}}</a> ({{ kospiinst.due_back }})        
       </li>
       {% endfor %}
     </ul>

@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>Owned kosdaks</h1>
+    <a href="{% url 'search_kosdak_name' %}">Search Code</a>  
 
     {% if kosdakinstance_list %}
     <ul>

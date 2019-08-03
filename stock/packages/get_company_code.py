@@ -27,7 +27,7 @@ def save_dict_data(filepath):
         COMPONY_CODES.append([])
         COMPONY_CODES[i].append(DF.회사명[i])
         COMPONY_CODES[i].append(DF.종목코드[i])
-        COMPONY_CODES[i].append(DF.업종[i])
+        ##COMPONY_CODES[i].append(DF.업종[i])
         COMPONY_CODES[i].append(DF.주요제품[i])
 
     return(COMPONY_CODES)

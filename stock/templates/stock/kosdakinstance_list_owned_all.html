@@ -2,20 +2,17 @@
 
 {% block content %}
     <h1>All Owned Kosdaks</h1>
+    <a href="{% url 'search_kosdak_name' %}">Search Code</a>  
 
     {% if kosdakinstance_list %}
     <ul>
 
       {% for kosdakinst in kosdakinstance_list %} 
-      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'book-detail' bookinst.book.pk %}">{{kosdakinst.kosdak.name}}</a>
+      <li class="{% if kosdakinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'kosdak-detail' kosdakinst.kosdak.pk %}">{{kosdakinst.kosdak.name}}</a>
          ({{ kosdakinst.due_back }}) 
-         {% if user.is_staff %}- 
-            {{ kosdakinst.ownner }}
+         {% if user.is_staff %}- {{ kosdakinst.user }}
          {% endif %} 
-         {% if perms.stock.can_mark_returned %}- 
-            <a href="{% url 'search_kosdak_name' kosdakinst.id %}">Owner</a>  
-         {% endif %}
       </li>
       {% endfor %}
     </ul>

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Kospi, Kosdak, KospiInstance, KosdakInstance
+from .models import Kospi, Kosdak, KospiInstance, KosdakInstance, Owner
 
 # Create your views here.
 
@@ -46,34 +46,45 @@ class KosdakListView(generic.ListView):
     paginate_by = 10
 
 class KosdakDetailView(generic.DetailView):
-    """ Generic class-based detail view for a kospis """
+    """ Generic class-based detail view for a kosdaks """
     model = Kosdak
+
+class OwnerListView(generic.ListView):
+    """ Generic class-based view for a list of kospis. """
+    model = Owner
+    paginate_by = 10
+
+class OwnerDetailView(generic.DetailView):
+    """ Generic class-based detail view for a kospis """
+    model = Owner
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class OwnerKospisByUserListView(LoginRequiredMixin, generic.ListView):
+class OwnedKospisByUserListView(LoginRequiredMixin, generic.ListView):
     """ Generic class-based view listing kospis on name to current user. """
     model = KospiInstance
     template_name = 'stock/kospiinstance_list_owned_user.html'
     paginate_by = 10
 
     def get_queryset(self):
-        return KospiInstance.objects.filter(owner=self.request.user).filter(status__exact='h').order_by('due_back')
+        return KospiInstance.objects.filter(user=self.request.user).filter(status__exact='h').order_by('due_back')
 
-class OwnerKosdaksByUserListView(LoginRequiredMixin, generic.ListView):
+
+class OwnedKosdaksByUserListView(LoginRequiredMixin, generic.ListView):
     """ Generic class-based view listing kospis on name to current user. """
     model = KosdakInstance
     template_name = 'stock/kosdakinstance_list_owned_user.html'
     paginate_by = 10
 
     def get_queryset(self):
-        return KosdakInstance.objects.filter(owner=self.request.user).filter(status__exact='h').order_by('due_back')
+        return KosdakInstance.objects.filter(user=self.request.user).filter(status__exact='h').order_by('due_back')
+
 
 # Added as part of challenge!
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
-class OwnerKospisAllListView(PermissionRequiredMixin, generic.ListView):
+class OwnedKospisAllListView(PermissionRequiredMixin, generic.ListView):
     """Generic class-based view listing all books on loan. Only visible to users with can_mark_returned permission."""
     model = KospiInstance
     permission_required = 'stock.can_mark_returned'
@@ -85,7 +96,7 @@ class OwnerKospisAllListView(PermissionRequiredMixin, generic.ListView):
 
 
 
-class OwnerKosdaksAllListView(PermissionRequiredMixin, generic.ListView):
+class OwnedKosdaksAllListView(PermissionRequiredMixin, generic.ListView):
     """Generic class-based view listing all books on loan. Only visible to users with can_mark_returned permission."""
     model = KosdakInstance
     permission_required = 'stock.can_mark_returned'
@@ -103,40 +114,63 @@ from django.urls import reverse
 import datetime
 
 # from  .form import SearchForm
-from .forms import KospiSearchForm, KosdakSearchForm
+from stock.forms import KospiSearchForm, KosdakSearchForm
 
 # Create your views here.
 @permission_required('stock.can_mark_returned')
-def search_kospi_name(request, pk):
-    kospi_instance = get_object_or_404(Kospi, pk=pk)
+def search_kospi_name1(request):
 
     #if post, processing data
     if request.method == 'POST':
 
         #Create a form_instance & binding requsted data
-        kospi_company_name_form = KospiSearchForm(request.POST)
+        kospi_form = KosdakSearchForm(request.POST)
 
         # Chect form validate
-        if kospi_company_name_form.is_valid():
+        if kospi_form.is_valid():
             # Process data as requsted
-            stock_company_name_data = kospi_instance.code.filter\
-                (name=kospi_company_name_form.cleaned_company_name['company_name'])
-            q_set = Kospi.objects.get(name=stock_company_name_data)
-            return HttpResponseRedirect(reverse('all-kospi'))
+            c_name = kospi_form.save(commit=False)
+            q_data = Kospi.objects.get(name=c_name)
+            print(q_data)
+            return HttpResponseRedirect(q_data)
     else:
-        proposed_search_name = KospiSearchForm.company_name
-        kospi_company_name_form = KospiSearchForm(initial={'company_name': proposed_search_name})
+        context = {
+            'form' : KospiSearchForm(),
+        }
+        return render(request, 'stock/search_kospi_name.html', context)
 
+def search_kospi_name(request):
+    qs = Kospi.objects.all()
+
+    q = request.GET.get('q', '')
+    if q:
+        qs = qs.filter(name__icontains=q)
     context = {
-        'form' : kospi_company_name_form,
-        'stock_instance' : kospi_instance,
+        'object_list' : qs,
+        'q' : q,
     }
-
     return render(request, 'stock/search_kospi_name.html', context)
 
+
 @permission_required('stock.can_mark_returned')
-def search_kosdak_name(request, pk):
-    kosdak_instance = get_object_or_404(Kosdak, pk=pk)
+def search_kosdak_name(request):
+    qs = Kosdak.objects.all()
+
+    q = request.GET.get('q', '')
+    if q:
+        qs = qs.filter(name__icontains=q)
+    context = {
+        'object_list' : qs,
+        'q' : q,
+    }
+    return render(request, 'stock/search_kosdak_name.html', context)
+
+
+
+
+
+def search_kosdak_name1(request):
+    kosdak_instance = get_object_or_404(KosdakInstance)
 
     #if post, processing data
     if request.method == 'POST':
@@ -157,7 +191,7 @@ def search_kosdak_name(request, pk):
 
     context = {
         'form' : kosdak_company_name_form,
-        'stock_instance' : kosdak_instance,
+        'kosdak_instance' : kosdak_instance,
     }
 
     return render(request, 'stock/search_kosdak_name.html', context)
@@ -167,6 +201,22 @@ from django.urls import reverse_lazy
 
 
 # Classes created for the forms challenge
+class OwnerCreate(PermissionRequiredMixin, CreateView):
+    model = Owner
+    fields = '__all__'
+    initial = {'date_of_death': '05/01/2018'}
+    permission_required = "stock.can_mark_returned"
+
+class OwnerUpdate(PermissionRequiredMixin, UpdateView):
+    model = Owner
+    fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+    permission_required = 'stock.can_mark_returned'
+
+class OwnerDelete(PermissionRequiredMixin, DeleteView):
+    model = Owner
+    success_url = reverse_lazy('owners')
+    permission_required = 'stock.can_mark_returned'
+
 class KospiCreate(PermissionRequiredMixin, CreateView):
     model = Kospi
     fields = '__all__'

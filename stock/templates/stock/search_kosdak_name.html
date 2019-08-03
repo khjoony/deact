@@ -1,14 +1,24 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Search: {{kosdak_instance.kosdak.name}}</h1>
-    <p>Owner: {{kosdak_instance.owner}}</p>
+
+<form action="" method="get">
+    {% csrf_token %}
+    <input type="text" name="q" value="{{q}}">
+    <input type="submit" value="Search" />
     
-    <form action="" method="post">
-        {% csrf_token %}
-        <table>
-        {{ form.as_table }}
-        </table>
-        <input type="submit" value="Submit" />
-    </form>
+</form>
+{% if q %}
+<h3>{{q}}을 입력하였읍니다 </h3>
+{% for post in object_list %}
+<a href="{{ post.get_absolute_url }}">{{ post.code }}</a><br />
+{% endfor %}
+{% endif %}
+{% if object_list %}
+{% for post in object_list %}
+<a href="{{ post.get_absolute_url }}">{{ post.name }}</a><br />
+{% endfor %}
+{% elif q %}
+Search Word {{ q }} Not Found!
+{% endif %}
 {% endblock %}
