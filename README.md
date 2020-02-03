@@ -2,15 +2,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 conda activate mycondaenv<br>
-mkdir deact-clone & cd deact-clone<br>
+<br>
 git init & git clone https://github.com/khjoony/deact.git<br>
-cd ..<br>
-create-react-app deact<br>
+<br>
 cd deact <br>
-django-admin startproject deactBackend .<br>
-copy ..\deact-clone\deact\stock .<br>
-copy ..\deact-clone\deact\post .<br>
-copy ..\deact-clone\deact\templates .<br>
+<br>
+npm install<br>
 
 create a file of mysql.ini
 ## mysql.ini
@@ -26,7 +23,7 @@ default-character-set = utf8<br>
 
 In the project directory, you can run:
 
-### `npm start`
+### `yarn start`
 
 Runs the react-app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

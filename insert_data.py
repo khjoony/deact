@@ -8,7 +8,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "deactBackend.settings")
 django.setup()
 from stock.models import Kospi, Kosdak
 
-"""
+
 ##  KOSPI COMPANY COdE GETTER
 def KospiInsert(filename):
     g_path = get_path(filename)
@@ -34,3 +34,4 @@ def KosdakInsert(filename):
 
 FILE_NAME = 'Kosdaku.csv'
 KosdakInsert(FILE_NAME)
+"""

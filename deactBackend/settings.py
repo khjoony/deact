@@ -99,7 +99,6 @@ DATABASES = {
             'read_default_file': os.path.join(BASE_DIR, 'mysql.ini'),
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'", #Added set of Strict
         },
-        'HOST': 'joonyHome.iptime.org',
         'PORT': '3306',
     }
 }
